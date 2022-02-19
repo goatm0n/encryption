@@ -105,6 +105,13 @@ def isPrime(num):
     else:
         return False
 
+def primeFactorList(N):
+    factorList = []
+    for num in range(2, N):
+        if N % num == 0:
+            factorList.append(num)
+    return factorList
+
 
 def generateEdList(p, q):
     ## choose e * d mod phi = 1
@@ -144,6 +151,31 @@ def generateKeyPair(e, d, N):
     publicKey = [e, N]
     privateKey = [d, N]
     return publicKey, privateKey
+
+def getPrivateKeyGivenPublicKey(publicKey):
+    #public key [e, N]
+    e = publicKey[0]
+    N = publicKey[1]
+    myPrimeFactorList = primeFactorList(N)
+    p = myPrimeFactorList[0]
+    q = myPrimeFactorList[1]
+    phi = (p - 1) * (q - 1)
+    g, k, d = extendedEuclidian(phi, e)
+    d = returnLargestMagnitude(k, d)
+    if d < 0:
+        d += phi
+    privateKey = [d, N]
+    return privateKey
+
+def decryptFile(path, privateKey):
+    encryptedIntegerList = readTextFile(path)
+    decryptedString = decryptIntegerListToString(encryptedIntegerList, privateKey)
+    return decryptedString
+
+def decryptFileGivenPublicKey(path, publicKey):
+    privateKey = getPrivateKeyGivenPublicKey(publicKey)
+    decryptedString = decryptFile(path, privateKey)
+    return decryptedString
 
 
 
