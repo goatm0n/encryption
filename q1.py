@@ -31,6 +31,21 @@ def main():
     print("Your string encrypted into an integer list corrresponding to ASCII its decimal code")
     intList = enc.encryptASCIIList(asciiList, publicKey)
     print(intList)    
+    encryptedString = enc.convertASCIIListToString(intList)
+    print("Your encrypted integer list converted back into a string by ascii decimal code")
+    print(encryptedString)
+    print("Writing encrypted integer list to file \"out.txt\"...")
+    enc.writeIntegerListToTextFile(intList, "out.txt")
+    print("Complete")
+    print("Reading integer list from file \"out.txt\"...")
+    encryptedIntList = enc.readTextFile("out.txt")
+    print("Complete")
+    print("Decrypting integer list to string...")
+    decryptedString = enc.decryptIntegerListToString(encryptedIntList, privateKey)
+    print("Complete")
+    print("------Decrypted String-------")
+    print(decryptedString)
+
     
 
 if __name__ == "__main__":

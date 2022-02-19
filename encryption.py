@@ -17,7 +17,6 @@ def convertStringToASCIIList(string):
 def encryptASCIIList(asciiList, publicKey):
     e = publicKey[0]
     n = publicKey[1]
-    print(e,n)
     encryptedList = [] 
     for num in asciiList:
         encryptedNum = (num**e) % n
@@ -31,10 +30,12 @@ def encryptStringToIntegerList(string, publicKey):
     encryptedIntegerList = encryptASCIIList(asciiList, publicKey[0], publicKey[1])
     return encryptedIntegerList
 
-def decryptIntegerListToASCIIList(integerList, privateKey, n):
+def decryptIntegerListToASCIIList(integerList, privateKey):
     asciiList = []
+    d = privateKey[0]
+    n = privateKey[1]
     for num in integerList:
-        decryptedNum = (num**privateKey) % n
+        decryptedNum = (num**d) % n
         asciiList.append(decryptedNum)
     return asciiList
 
@@ -45,8 +46,8 @@ def convertASCIIListToString(asciiList):
     return myString        
     
 # input encrpyted integer list; return decrypted string
-def decryptIntegerListToString(integerList, privateKey, n):
-    asciiList = decryptIntegerListToASCIIList(integerList, privateKey, n)
+def decryptIntegerListToString(integerList, privateKey):
+    asciiList = decryptIntegerListToASCIIList(integerList, privateKey)
     decryptedString = convertASCIIListToString(asciiList)
     return decryptedString
     
@@ -103,6 +104,7 @@ def isPrime(num):
         return True
     else:
         return False
+
 
 def generateEdList(p, q):
     ## choose e * d mod phi = 1

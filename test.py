@@ -1,3 +1,5 @@
 import encryption as enc
 
-print(enc.generateKeyPair(37,59))
+e = 307
+N = 165073
+
